@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>2021-01-17 00:35:31</p>
+        {{ message }} {{name}}
+    </div>
+    <div><a href="#" onclick="showstr('hello');return 0;">click me.</a></div>
+    <script type="text/javascript">
+        function showstr(params) {
+            console.log(params);
+            alert(params);
+        }
+    </script>
+    <script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!',
+            name : "Vue"
+        }
+    });
+    </script>
+</body>
+</html>
