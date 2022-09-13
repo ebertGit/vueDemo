@@ -4,19 +4,35 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        body {
+            background-color: bisque;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
+        {{ message }} {{name}}
+        <div v-bind:id="message"></div>
+        <ul>
+            <li v-for="item in list">
+                <span v-if="!item.del">{{item.title}}</span>
+                <span v-else style="text-decoration: line-through;">{{item.title}}</span>
+                <button v-show="!item.del" onclick="">delete</button>
+            </li>
+            <hr>
+            <todo-item data-test="abc" v-for="item in list" v-bind:title="item.title" v-bind:del="item.del"></todo-item>
+        </ul>
+        <hr>
+        <todo-list></todo-list>
+    </div>
+    <!-- This is comment. -->
+    <div style="background-color: aquamarine; padding: 1em;">
         <p id="RealtimeClockArea"></p>
         {{ message }} {{name}}
     </div>
-    <div><a href="#" onclick="showstr('hello');return 0;">click me.</a></div>
-    <script type="text/javascript">
-        function showstr(params) {
-            console.log(params);
-            alert(params);
-        }
 
+    <script type="text/javascript">
         function set2fig(num) {
             // 桁数が1桁だったら先頭に0を加えて2桁に調整する
             var ret;
@@ -35,13 +51,60 @@
         setInterval('showClock()',1000);
     </script>
     <script type="text/javascript">
-    var app = new Vue({
-        el: '#app',
-        data: {
-            message: 'Hello Vue!',
-            name : "Vue"
-        }
-    });
+        Vue.component('todo-item', {
+            props: {
+                title: String,
+                del: {
+                    type: Boolean,
+                    default: false
+                }
+            },
+            template: `
+                <li>
+                    <span v-if="!del">{{title}}</span>
+                    <span v-else style="text-decoration: line-through;">{{title}}</span>
+                    <button v-show="!del" onclick="">delete</button>
+                </li>
+            `,
+        })
+        Vue.component('todo-list', {
+            template: `
+                <ul>
+                    <todo-item v-for="item in list" v-bind:title="item.title" v-bind:del="item.del"></todo-item>
+                </ul>
+            `,
+            data: function () {
+                return {
+                    list: [{
+                        title: 'クラス３',
+                        del: false
+                    },
+                    {
+                        title: 'クラス４',
+                        del: true
+                    }]
+                }
+            },
+            methods: {
+
+            }
+        })
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello-World!',
+                name : "Vue",
+                list: [{
+                    title: 'クラス１',
+                    del: false
+                },
+                {
+                    title: 'クラス２',
+                    del: true
+                }]
+            }
+        });
+        
     </script>
 </body>
 </html>
