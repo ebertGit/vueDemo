@@ -18,12 +18,16 @@
             <li v-for="item in list">
                 <span v-if="!item.del">{{item.title}}</span>
                 <span v-else style="text-decoration: line-through;">{{item.title}}</span>
-                <button v-show="!item.del" onclick="">delete</button>
+                <!-- handled by app. -->
+                <button v-show="!item.del" v-on:click="handlerClick(item)">delete</button>
             </li>
             <hr>
-            <todo-item data-test="abc" v-for="item in list" v-bind:title="item.title" v-bind:del="item.del"></todo-item>
+            <span>--created by todo-item component--</span>
+            <!-- handled by todo-item. -->
+            <todo-item @delete="handlerDelete" data-test="abc" v-for="item in list" v-bind:title="item.title" v-bind:del="item.del"></todo-item>
         </ul>
         <hr>
+        <span>--created by todo-list component--</span>
         <todo-list></todo-list>
     </div>
     <!-- This is comment. -->
@@ -63,14 +67,21 @@
                 <li>
                     <span v-if="!del">{{title}}</span>
                     <span v-else style="text-decoration: line-through;">{{title}}</span>
-                    <button v-show="!del" onclick="">delete</button>
+                    <button v-show="!del" v-on:click="handlerClick">delete</button>
                 </li>
             `,
+            methods: {
+                handlerClick() {
+                    console.log('todo-item:handlerClick.', this);
+                    // emit function [delete] witch defined in parent.
+                    this.$emit('delete', this.title, this.del);
+                }
+            }
         })
         Vue.component('todo-list', {
             template: `
                 <ul>
-                    <todo-item v-for="item in list" v-bind:title="item.title" v-bind:del="item.del"></todo-item>
+                    <todo-item @delete="handlerDelete" v-for="item in list" v-bind:title="item.title" v-bind:del="item.del"></todo-item>
                 </ul>
             `,
             data: function () {
@@ -82,11 +93,24 @@
                     {
                         title: 'クラス４',
                         del: true
+                    },
+                    {
+                        title: 'クラス５',
+                        del: false
                     }]
                 }
             },
             methods: {
-
+                handlerDelete(val1, val2) {
+                    console.log('todo-list:handlerDelete:', val1, val2);
+                    console.log('this.list:', this.list);
+                    const index = this.list.findIndex(item => {
+                        console.log('title,val1:', item.title, val1);
+                        if (item.title === val1) return true;
+                        return false;});
+                    console.log('index:', index);
+                    this.list.splice(index, 1);
+                }
             }
         })
         var app = new Vue({
@@ -102,6 +126,16 @@
                     title: 'クラス２',
                     del: true
                 }]
+            },
+            methods: {
+                handlerDelete(val, val2) {
+                    console.log('app:handlerDelete:', val, val2);
+                },
+                handlerClick(val) {
+                    console.log('app:handlerClick.',this);
+                    console.log('val:', val);
+                    val.del = true;
+                },
             }
         });
         
