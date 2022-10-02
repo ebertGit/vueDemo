@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <script src="test.js"></script>
+    <style>
+        body {
+            /* width: 100%; */
+        }
+        .center * {
+            margin: 0 auto;
+        }
+        .header {
+            background-color: aquamarine;
+            width: 100%;
+            height: 32px;
+            padding-left: 10px;
+        }
+        .header p {
+            vertical-align: middle;
+        }
+        .printout {
+            background-color: bisque;
+            width: 100%;
+            min-height: 100px;
+            padding-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="center" style="width: 100%;">
+        <div style="width: 500px;">
+            <div class="header"><p>result:&nbsp;<span id="printout_result"></span></p></div>
+            <div id="printout_content" class="printout"></div>
+        </div>
+    </div>
+    <script>
+        TestMain.run();
+    </script>
+</body>
+</html>
