@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        body {
+            background-color: bisque;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        {{ message }} {{name}}
+        <div v-bind:id="message"></div>
+        <span>--created by todo-item component--</span>
+        <ul>
+            <todo-item data-test="abc" v-for="item in list" v-bind:title="item.title" v-bind:del="item.del"></todo-item>
+        </ul>
+        <hr>
+        <span>--created by todo-list component--</span>
+        <todo-list></todo-list>
+    </div>
+
+    <script type="text/javascript">
+        Vue.component('todo-item', {
+            props: {
+                title: String,
+                del: {
+                    type: Boolean,
+                    default: false
+                }
+            },
+            template: `
+                <li>
+                    <span v-if="!del">{{title}}</span>
+                    <span v-else style="text-decoration: line-through;">{{title}}</span>
+                    <button v-show="!del">delete</button>
+                </li>
+            `,
+        });
+
+        Vue.component('todo-list', {
+            template: `
+                <ul>
+                    <todo-item v-for="item in list" v-bind:title="item.title" v-bind:del="item.del"></todo-item>
+                </ul>
+            `,
+            data: function () {
+                return {
+                    list: [{
+                        title: 'クラス３',
+                        del: false
+                    },
+                    {
+                        title: 'クラス４',
+                        del: true
+                    },
+                    {
+                        title: 'クラス５',
+                        del: false
+                    }]
+                }
+            },
+        });
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello-World!',
+                name : "Vue",
+                list: [{
+                    title: 'クラス１',
+                    del: false
+                },
+                {
+                    title: 'クラス２',
+                    del: true
+                }]
+            },
+        });
+        
+    </script>
+</body>
+</html>
