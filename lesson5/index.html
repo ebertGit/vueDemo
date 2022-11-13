@@ -13,8 +13,10 @@
 </head>
 <body>
     <div id="app">
-        {{ message }} {{name}}
-        <div v-bind:id="message"></div>
+        <h1>{{ message }} {{name}}</h1>
+        <div v-bind:id="message">
+            <h2>05 | 组件基础及组件注册</h2>
+        </div>
         <span>--created by todo-item component--</span>
         <ul>
             <todo-item data-test="abc" v-for="item in list" v-bind:title="item.title" v-bind:del="item.del"></todo-item>

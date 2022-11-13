@@ -13,8 +13,10 @@
 </head>
 <body>
     <div id="app">
-        {{ message }} {{name}}
-        <div v-bind:id="message"></div>
+        <h1>{{ message }} {{name}}</h1>
+        <div v-bind:id="message">
+            <h2>06 | Vue组件的核心概念：事件</h2>
+        </div>
         <ul>
             <li v-for="item in list">
                 <span v-if="!item.del">{{item.title}}</span>
