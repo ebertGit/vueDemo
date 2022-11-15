@@ -17,7 +17,6 @@
         <div v-bind:id="message">
             <h2>07 | Vue组件的核心概：插槽</h2>
         </div>
-        <ul>
         <todo-list>
             <todo-item @delete="handlerDelete" v-for="item in list" v-bind:title="item.title" v-bind:del="item.del">
                 <!-- v2.5 and before -->
